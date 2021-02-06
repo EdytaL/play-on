@@ -1,7 +1,21 @@
 <div class="container">
-    <div class="feed-container" *ngIf="items$ | async">
+    <ng-container  *ngIf="items$ | async">
+      <div class="feed-container">
         <ng-container *ngFor="let item of items$ | async as items">
-            <app-video-tile [item]="item"></app-video-tile>
+          <app-video-tile [item]="item"></app-video-tile>
         </ng-container>
-    </div>
+      </div>
+      <div class="pagination-wrapper">
+          <nz-pagination
+              [nzPageIndex]="(pagination$ | async)?.page"
+              [nzTotal]="(metadata$ | async)?.count"
+              [nzPageSize]="12"
+              [nzShowTotal]="totalTemplate"
+              (nzPageIndexChange)="changePage($event)"
+          ></nz-pagination>
+          <ng-template #totalTemplate let-total>
+              Total {{ (metadata$ | async)?.count | number: '1.0-0' }} items
+          </ng-template>
+      </div>
+    </ng-container>
 </div>

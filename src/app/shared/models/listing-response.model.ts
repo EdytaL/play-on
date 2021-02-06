@@ -1,4 +1,4 @@
 export interface VideoListingResponse {
-    metadata: any
+    _meta: any
     items: any[]
 }

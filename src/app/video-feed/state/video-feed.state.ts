@@ -1,29 +1,35 @@
-import {
-    State,
-    Action,
-    Selector,
-    StateContext,
-    NgxsOnInit,
-    Store,
-} from '@ngxs/store'
+import { State, Action, Selector, StateContext, NgxsOnInit } from '@ngxs/store'
 import { VideoFeedService } from '../services/video-feed.service'
 import {
+    ChangePage,
     FetchVideoFeedList,
     FetchVideoFeedListFailure,
     FetchVideoFeedListSuccess,
 } from '../actions/video-feed.actions'
-import { catchError, map, tap } from 'rxjs/operators'
+import { catchError, tap } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { VideoDetails } from '../../shared/models/video-details-model'
 import { Resource, ResourceType } from '../../shared/models/resource-model'
 import { VideoListingResponse } from '../../shared/models/listing-response.model'
+import { IPageable } from '../../shared/models/page.model'
 
 export interface VideoFeedStateModel {
     items: any[]
     fetchItemsPending: boolean
     fetchItemsSuccess: boolean
     fetchItemsError: undefined
+    pagination: IPageable
+    metadata: IMetadata
+}
+
+export interface IMetadata {
+    count: number
+}
+
+export enum DefaultSearchMetadata {
+    page = 1,
+    limit = 12,
 }
 
 @State<VideoFeedStateModel>({
@@ -33,11 +39,16 @@ export interface VideoFeedStateModel {
         fetchItemsPending: false,
         fetchItemsSuccess: false,
         fetchItemsError: undefined,
+        pagination: {
+            limit: DefaultSearchMetadata.limit,
+            page: DefaultSearchMetadata.page,
+        },
+        metadata: { count: 0 },
     },
 })
 @Injectable()
 export class VideoFeedState implements NgxsOnInit {
-    constructor(private service: VideoFeedService, private store: Store) {}
+    constructor(private service: VideoFeedService) {}
 
     ngxsOnInit({ patchState }: StateContext<VideoFeedStateModel>) {}
     @Selector()
@@ -56,35 +67,44 @@ export class VideoFeedState implements NgxsOnInit {
             fetchItemsSuccess: false,
             fetchItemsError: undefined,
             items: undefined,
-        })
-        return this.service.getVideoList().pipe(
-            tap((response: VideoListingResponse) => {
-                return dispatch([new FetchVideoFeedListSuccess(response)])
-            }),
-            catchError((httpError: HttpErrorResponse) => {
-                return dispatch(new FetchVideoFeedListFailure(httpError.error))
-            })
-        )
+        });
+        const { pagination } = getState();
+        const offset = pagination?.page ? (pagination.page - 1) * DefaultSearchMetadata.limit : 0;
+        return this.service
+            .getVideoList(offset, DefaultSearchMetadata.limit)
+            .pipe(
+                tap((response: VideoListingResponse) => {
+                    return dispatch([new FetchVideoFeedListSuccess(response)])
+                }),
+                catchError((httpError: HttpErrorResponse) => {
+                    return dispatch(
+                        new FetchVideoFeedListFailure(httpError.error)
+                    )
+                })
+            )
     }
 
     @Action(FetchVideoFeedListSuccess)
-    getSellerDetailsSuccess(
+    getVideoListSuccess(
         { patchState, getState }: StateContext<VideoFeedStateModel>,
         action: FetchVideoFeedListSuccess
     ) {
-        let items = action.payload['items'].map((item) => {
+        let items = action.payload.items.map((item) => {
             return this.mapToVideoModel(item)
-        })
+        });
+        let metadata = action.payload._meta
 
         patchState({
             fetchItemsPending: false,
             fetchItemsSuccess: true,
             fetchItemsError: undefined,
             items: items,
+            metadata: { count: metadata.total },
         })
     }
+
     @Action(FetchVideoFeedListFailure)
-    getSellerDetailsFailure(
+    getVideoListFailure(
         { patchState, getState }: StateContext<VideoFeedStateModel>,
         action: FetchVideoFeedListFailure
     ) {
@@ -94,6 +114,18 @@ export class VideoFeedState implements NgxsOnInit {
             fetchItemsSuccess: false,
             fetchItemsError: action.payload,
         })
+    }
+
+    @Action(ChangePage)
+    changePage(
+        { patchState, dispatch, getState }: StateContext<VideoFeedStateModel>,
+        action: ChangePage
+    ) {
+        patchState({
+            pagination: { ...getState().pagination, page: action.payload },
+        });
+      return dispatch([new FetchVideoFeedList()])
+
     }
 
     mapToVideoModel(item: any): VideoDetails {
@@ -158,6 +190,12 @@ export class VideoFeedState implements NgxsOnInit {
         let resourcesImageType = resources.filter(
             (item) => item.type.toLowerCase() == ResourceType.IMAGE
         )
-        return resourcesImageType?.length ? resourcesImageType[0].url : ''
+        return resourcesImageType?.length
+            ? this.formatImgUrlResize(resourcesImageType[0].url, 320)
+            : ''
+    }
+
+    formatImgUrlResize(url: string, width: number): string {
+        return url.replace('/im/', '/im:i:w_' + width + '/')
     }
 }
