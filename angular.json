@@ -27,11 +27,21 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "aot": true,
-                        "assets": ["src/assets", {"glob":"**/*","input":"./node_modules/@ant-design/icons-angular/src/inline-svg/","output":"/assets/"}],
-                        "styles": ["src/styles/theme.less", "src/styles/styles.less"],
+                        "assets": [
+                            "src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                                "output": "/assets/"
+                            }
+                        ],
+                        "styles": [
+                            "src/styles/theme.less",
+                            "src/styles/styles.less",
+                            "./node_modules/@videogular/ngx-videogular/fonts/videogular.css"
+                        ],
                         "scripts": [],
                         "preserveSymlinks": true
-
                     },
                     "configurations": {
                         "production": {
@@ -119,9 +129,9 @@
         }
     },
     "schematics": {
-      "@schematics/angular:component": {
-        "styleext": "less"
-      }
+        "@schematics/angular:component": {
+            "styleext": "less"
+        }
     },
     "defaultProject": "play-on"
 }

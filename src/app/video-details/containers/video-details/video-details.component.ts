@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
+import { VideoDetails } from '../../../shared/models/video-details-model'
 
 @Component({
     selector: 'app-video-details',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core'
     styleUrls: ['./video-details.component.less'],
 })
 export class VideoDetailsComponent implements OnInit {
+    @Input() video: VideoDetails | undefined
+
     constructor() {}
 
     ngOnInit(): void {}

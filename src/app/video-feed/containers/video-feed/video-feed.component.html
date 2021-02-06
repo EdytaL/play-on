@@ -1,21 +1,29 @@
 <div class="container">
-    <ng-container  *ngIf="items$ | async">
-      <div class="feed-container">
-        <ng-container *ngFor="let item of items$ | async as items">
-          <app-video-tile [item]="item"></app-video-tile>
-        </ng-container>
-      </div>
-      <div class="pagination-wrapper">
-          <nz-pagination
-              [nzPageIndex]="(pagination$ | async)?.page"
-              [nzTotal]="(metadata$ | async)?.count"
-              [nzPageSize]="12"
-              [nzShowTotal]="totalTemplate"
-              (nzPageIndexChange)="changePage($event)"
-          ></nz-pagination>
-          <ng-template #totalTemplate let-total>
-              Total {{ (metadata$ | async)?.count | number: '1.0-0' }} items
-          </ng-template>
-      </div>
-    </ng-container>
+    <ng-container *ngTemplateOutlet="videoFeed"></ng-container>
 </div>
+<ng-template #videoPlayer>
+    <div class="content-container">
+        <app-video-player [video]="videoToPlay"></app-video-player>
+    </div>
+</ng-template>
+<ng-template #videoFeed>
+    <ng-container *ngIf="(items$ | async)?.length">
+        <div class="content-container">
+            <ng-container *ngFor="let item of items$ | async as items">
+                <app-video-tile [item]="item"></app-video-tile>
+            </ng-container>
+        </div>
+        <div class="pagination-wrapper">
+            <nz-pagination
+                [nzPageIndex]="(pagination$ | async)?.page"
+                [nzTotal]="(metadata$ | async)?.count"
+                [nzPageSize]="12"
+                [nzShowTotal]="totalTemplate"
+                (nzPageIndexChange)="changePage($event)"
+            ></nz-pagination>
+            <ng-template #totalTemplate let-total>
+                Total {{ (metadata$ | async)?.count | number: '1.0-0' }} items
+            </ng-template>
+        </div>
+    </ng-container>
+</ng-template>

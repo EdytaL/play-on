@@ -1343,6 +1343,13 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
+"@videogular/ngx-videogular@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@videogular/ngx-videogular/-/ngx-videogular-3.0.1.tgz#f6e2acb2dff62184caaf7ab3463d97baa08f8e3c"
+  integrity sha512-VgXLwyWUMdNXBw1wpRmdtRcmxiPoPLFtvuVFrG43X+6DJRg6vStwtHcUgV9yZwZVYKAlueKrL1SoWtTIpD80Fw==
+  dependencies:
+    tslib "^1.11.1 || ^2.0.0"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -8555,7 +8562,7 @@ ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-tslib@2.1.0, tslib@^2.0.0:
+tslib@2.1.0, "tslib@^1.11.1 || ^2.0.0", tslib@^2.0.0, tslib@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==

@@ -30,10 +30,13 @@ export class VideoFeedComponent implements OnInit {
     @Select((state: any) => state.videoFeed.metadata)
     metadata$: Observable<IMetadata> | undefined
     pageSize: DefaultSearchMetadata.limit | undefined
+    videoToPlay: VideoDetails | undefined
     constructor(private store: Store) {}
 
     ngOnInit(): void {
-        this.store.dispatch(new FetchVideoFeedList())
+        this.store.dispatch(new FetchVideoFeedList()).subscribe((_) => {
+            this.videoToPlay = _.videoFeed.items[0]
+        })
     }
 
     changePage(page: any) {
