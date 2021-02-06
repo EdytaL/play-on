@@ -12,7 +12,9 @@ export class VideoFeedService {
     ) {}
 
     getVideoList() {
-        const url = this.environmentService.contentListUrl
+        const url =
+            this.environmentService.contentListUrl +
+            '?f[mediaType]=Video&limit=12'
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         })

@@ -15,6 +15,9 @@ import {
 import { catchError, map, tap } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { VideoDetails } from '../../shared/models/video-details-model'
+import { Resource, ResourceType } from '../../shared/models/resource-model'
+import { VideoListingResponse } from '../../shared/models/listing-response.model'
 
 export interface VideoFeedStateModel {
     items: any[]
@@ -55,9 +58,8 @@ export class VideoFeedState implements NgxsOnInit {
             items: undefined,
         })
         return this.service.getVideoList().pipe(
-            map((response: any) => response.data),
-            tap((items: any[]) => {
-                return dispatch([new FetchVideoFeedListSuccess(items)])
+            tap((response: VideoListingResponse) => {
+                return dispatch([new FetchVideoFeedListSuccess(response)])
             }),
             catchError((httpError: HttpErrorResponse) => {
                 return dispatch(new FetchVideoFeedListFailure(httpError.error))
@@ -70,7 +72,9 @@ export class VideoFeedState implements NgxsOnInit {
         { patchState, getState }: StateContext<VideoFeedStateModel>,
         action: FetchVideoFeedListSuccess
     ) {
-        let items = action.payload
+        let items = action.payload['items'].map((item) => {
+            return this.mapToVideoModel(item)
+        })
 
         patchState({
             fetchItemsPending: false,
@@ -90,5 +94,70 @@ export class VideoFeedState implements NgxsOnInit {
             fetchItemsSuccess: false,
             fetchItemsError: action.payload,
         })
+    }
+
+    mapToVideoModel(item: any): VideoDetails {
+        let formattedResources: any
+        let thumbnailImage: any
+        if (item?.resources?.length) {
+            formattedResources = this.formatResources(item.resources)
+            if (formattedResources?.length)
+                thumbnailImage = this.getThumbnailImageUrl(formattedResources)
+        }
+
+        return {
+            id: item.id,
+            title: item?.attributes?.productTitle,
+            audience: item?.attributes?.audience,
+            description: item?.attributes?.description,
+            imageUrl: thumbnailImage,
+            resources: formattedResources,
+        }
+    }
+
+    formatResources(resources: Array<any>): Array<Resource> {
+        let filteredResources = resources.filter(
+            (item) =>
+                item.type != null &&
+                (item.type.toLowerCase() == ResourceType.IMAGE ||
+                    item.type.toLowerCase() == ResourceType.VIDEO ||
+                    item.type.toLowerCase() == ResourceType.VIDEO_HD)
+        )
+
+        return filteredResources.length != 0
+            ? filteredResources.map((item) => {
+                  return {
+                      id: item.id,
+                      type: this.mapResourceType(item.type),
+                      url: item.url,
+                  }
+              })
+            : []
+    }
+
+    mapResourceType(type: string): ResourceType {
+        switch (type.toLowerCase()) {
+            case ResourceType.IMAGE: {
+                return ResourceType.IMAGE
+                break
+            }
+            case ResourceType.VIDEO: {
+                return ResourceType.VIDEO
+                break
+            }
+            case ResourceType.VIDEO_HD: {
+                return ResourceType.VIDEO_HD
+                break
+            }
+            default:
+                return ResourceType.IMAGE
+        }
+    }
+
+    getThumbnailImageUrl(resources: Array<Resource>): string {
+        let resourcesImageType = resources.filter(
+            (item) => item.type.toLowerCase() == ResourceType.IMAGE
+        )
+        return resourcesImageType?.length ? resourcesImageType[0].url : ''
     }
 }

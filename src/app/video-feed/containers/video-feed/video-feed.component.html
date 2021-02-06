@@ -1,1 +1,7 @@
-<p>video-feed works!</p>
+<div class="container">
+    <div class="feed-container" *ngIf="items$ | async">
+        <ng-container *ngFor="let item of items$ | async as items">
+            <app-video-tile [item]="item"></app-video-tile>
+        </ng-container>
+    </div>
+</div>
