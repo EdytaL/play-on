@@ -14,6 +14,9 @@ import { IconsProviderModule } from './icons-provider.module'
 import { NzLayoutModule } from 'ng-zorro-antd/layout'
 import { NzMenuModule } from 'ng-zorro-antd/menu'
 import { CoreModule } from './core/core.module'
+import { environment } from '../environments/environment'
+import { NgxsModule } from '@ngxs/store'
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin'
 
 registerLocaleData(en)
 
@@ -29,6 +32,10 @@ registerLocaleData(en)
         NzLayoutModule,
         NzMenuModule,
         CoreModule,
+        NgxsModule.forRoot([], {
+            developmentMode: !environment.production,
+        }),
+        NgxsLoggerPluginModule.forRoot(),
     ],
     providers: [{ provide: NZ_I18N, useValue: en_US }],
     bootstrap: [AppComponent],
