@@ -27,9 +27,11 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "aot": true,
-                        "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.css"],
-                        "scripts": []
+                        "assets": ["src/assets", {"glob":"**/*","input":"./node_modules/@ant-design/icons-angular/src/inline-svg/","output":"/assets/"}],
+                        "styles": ["src/styles/theme.less", "src/styles/styles.less"],
+                        "scripts": [],
+                        "preserveSymlinks": true
+
                     },
                     "configurations": {
                         "production": {
@@ -115,6 +117,11 @@
                 }
             }
         }
+    },
+    "schematics": {
+      "@schematics/angular:component": {
+        "styleext": "less"
+      }
     },
     "defaultProject": "play-on"
 }

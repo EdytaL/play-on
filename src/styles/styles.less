@@ -1,0 +1,116 @@
+@import (reference) './theme';
+@import (reference) './reference.less';
+
+html,
+body,
+app-root,
+nz-layout.main {
+    height: 100vh;
+}
+
+.content-height-100 {
+    min-height: ~'calc(100vh - @{app-header-height} - @{app-footer-height})';
+}
+.layout-margin-bottom {
+    margin-bottom: @layout-margin-bottom;
+}
+
+.background {
+    color: #fff;
+    background-image: url('../assets/background.jpg');
+    background-size: 100%;
+    background-size: cover;
+    height: 100vh;
+}
+.transparent {
+    background-color: transparent;
+}
+
+.separator {
+    height: 26px;
+    border-right: 1px solid #acadc1;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+// Defined by antd - https://github.com/NG-ZORRO/ng-zorro-antd/blob/e5535d252be3644db380fa2618cdefe1cfcc0676/components/radio/style/index.less#L134
+
+.base-line-height {
+    line-height: 1em !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.ant-btn-danger {
+    &:hover {
+        background-color: #d45c55;
+        border-color: #d45c55;
+    }
+
+    &:focus {
+        background-color: #b3463f;
+        border-color: #b3463f;
+    }
+
+    &:active {
+        background-color: #993b36;
+        border-color: #993b36;
+    }
+}
+
+.ant-btn-primary.primary-secondary {
+    background-color: @primary-purple-color;
+    border-color: @primary-purple-color;
+
+    &:hover {
+        background-color: @primary-purple-color;
+        border-color: @primary-purple-color;
+    }
+
+    &:focus {
+        background-color: @primary-purple-color;
+        border-color: @primary-purple-color;
+    }
+
+    &:active {
+        background-color: @primary-purple-color;
+        border-color: @primary-purple-color;
+    }
+}
+
+.btn-container {
+    text-align: center;
+
+    & > button {
+        min-width: 100px;
+    }
+
+    & > button:not(:last-child) {
+        margin-right: 10px;
+    }
+}
+
+.box-container {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 4px !important;
+    background-color: white;
+}
+
+i.info-circle {
+    color: @primary-color;
+    cursor: pointer;
+}
+.ant-select-dropdown-menu-item-group-title {
+    font-size: 10px !important;
+}
+
+.interactive-text {
+    cursor: pointer;
+    color: #8e8fa6;
+
+    &:hover {
+        color: #38b6a0;
+    }
+}

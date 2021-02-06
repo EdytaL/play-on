@@ -1,0 +1,104 @@
+@import (reference) './styles';
+
+nz-avatar {
+    img {
+        object-fit: cover;
+    }
+}
+
+nz-modal {
+    h1 {
+        font-size: 24px;
+    }
+}
+
+nz-alert {
+    div.ant-alert-error {
+        border-color: @alert-error-color !important;
+        background-color: @alert-error-background-color;
+        span.ant-alert-message {
+            color: @alert-error-color;
+        }
+    }
+
+    div.ant-alert-warning {
+        border-color: @alert-warning-color;
+        background-color: @alert-warning-background-color;
+        span.ant-alert-message {
+            color: @alert-warning-color;
+        }
+    }
+
+    div.ant-alert-info {
+        border-color: @alert-info-color;
+        background-color: @alert-info-background-color;
+        span.ant-alert-message {
+            color: @alert-info-color;
+        }
+    }
+
+    div.ant-alert-success {
+        border-color: @alert-success-color;
+        background-color: @alert-success-background-color;
+        span.ant-alert-message {
+            color: @alert-success-color;
+        }
+    }
+}
+
+nz-skeleton {
+    & > .ant-skeleton-header {
+        padding: 0px !important;
+    }
+
+    & > .ant-skeleton-content > .ant-skeleton-paragraph {
+        padding: 0px !important;
+    }
+}
+leap-menu nz-skeleton {
+    & > .ant-skeleton-header {
+        margin-right: 5px !important;
+    }
+}
+
+nz-card {
+    .ant-card-body {
+        padding: 20px;
+    }
+}
+
+nz-form-label {
+    & > label {
+        font-size: 16px !important;
+        color: #394042 !important;
+        &:after {
+            content: '' !important;
+        }
+    }
+
+    span.optional {
+        font-size: @font-size-sm;
+        color: @support-text-color;
+    }
+}
+
+nz-header.navbar.ant-layout-header {
+    padding: 0 20px;
+}
+
+button {
+    min-width: 120px;
+
+    &.ant-modal-close {
+        min-width: auto;
+    }
+
+    &.ant-btn-lg {
+        height: 48px;
+        font-size: @font-size-base;
+    }
+}
+
+nz-breadcrumb {
+    padding: 10px 10px 0px 10px !important;
+}
