@@ -4,6 +4,8 @@
 
 export const environment = {
     production: false,
+
+    contentListUrl: 'https://rbcp.rbmbtnx.net/api/v2/content/communication',
 }
 
 /*
