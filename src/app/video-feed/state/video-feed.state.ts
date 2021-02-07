@@ -98,9 +98,12 @@ export class VideoFeedState implements NgxsOnInit {
         { patchState, getState }: StateContext<VideoFeedStateModel>,
         action: FetchVideoFeedListSuccess
     ) {
-        let items = action.payload.items.map((item) => {
-            return this.mapToVideoModel(item);
-        });
+        let items = action.payload.items
+            .filter((item) => item?.resources?.length)
+            .map((item) => {
+                return this.mapToVideoModel(item);
+            })
+            .filter((item) => item != null);
         let metadata = action.payload._meta;
 
         patchState({
@@ -159,13 +162,12 @@ export class VideoFeedState implements NgxsOnInit {
     }
 
     mapToVideoModel(item: any): VideoDetails {
-        let formattedResources: any;
+        let formattedResources = this.formatResources(item.resources);
         let thumbnailImage: any;
-        if (item?.resources?.length) {
-            formattedResources = this.formatResources(item.resources);
-            if (formattedResources?.length)
-                thumbnailImage = this.getThumbnailImageUrl(formattedResources);
+        if (!formattedResources.length) {
+            return null;
         }
+        thumbnailImage = this.getThumbnailImageUrl(formattedResources);
 
         return {
             id: item.id,
