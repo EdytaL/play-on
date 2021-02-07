@@ -1,0 +1,15 @@
+<nz-header
+    class="navbar"
+    [ngClass]="isWelcomePage ? 'transparent' : 'navbar-background'"
+>
+    <div class="nav-wrapper">
+        <div class="nav-right">
+            <i
+                nz-icon
+                nzType="github"
+                nzTheme="outline"
+                (click)="onNavigate()"
+            ></i>
+        </div>
+    </div>
+</nz-header>

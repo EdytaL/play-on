@@ -1,0 +1,16 @@
+<div class="error-container">
+    <nz-empty
+        [nzNotFoundContent]="contentTpl"
+        [nzNotFoundFooter]="footerTpl"
+        [nzNotFoundImage]="icon"
+    >
+        <ng-template #contentTpl>
+            <h1>404</h1>
+            <h2>Sorry, we can't find the page you were looking for.</h2>
+        </ng-template>
+        <ng-template #footerTpl>
+            <button (click)="onClick()">Go Home</button>
+        </ng-template>
+        <ng-template #icon> </ng-template>
+    </nz-empty>
+</div>

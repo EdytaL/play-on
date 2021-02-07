@@ -1,0 +1,13 @@
+<div class="search-container">
+    <form [formGroup]="form" novalidate>
+        <input
+            nz-input
+            [nzSize]="size"
+            type="text"
+            class="search-input"
+            formControlName="filter"
+            [placeholder]="placeholder || ''"
+        />
+    </form>
+    <i nz-icon nzType="search" nzTheme="outline" class="search-btn"></i>
+</div>

@@ -1,0 +1,17 @@
+<ng-container *ngIf="item">
+    <nz-card
+        nzHoverable
+        [nzCover]="coverTemplate"
+        (click)="emitSelectedVideo(item)"
+        class="card"
+    >
+        <app-video-details
+            [video]="item"
+            [maxDescriptionLength]="114"
+            [maxTitleLength]="27"
+        ></app-video-details>
+    </nz-card>
+    <ng-template #coverTemplate>
+        <img alt="{{ item.title }}" src="{{ imageUrl }}" />
+    </ng-template>
+</ng-container>

@@ -1,0 +1,14 @@
+<nz-empty
+    [nzNotFoundContent]="contentTpl"
+    [nzNotFoundFooter]="footerTpl"
+    [nzNotFoundImage]="icon"
+>
+    <ng-template #contentTpl>
+        <h1>Ooops..!</h1>
+        <h2>Something went wrong</h2>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button (click)="onClick()">Go Home</button>
+    </ng-template>
+    <ng-template #icon> </ng-template>
+</nz-empty>

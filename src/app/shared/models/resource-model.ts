@@ -2,6 +2,8 @@ export interface Resource {
     id: string;
     type: ResourceType;
     url: string;
+    width: number;
+    height: number;
 }
 
 export enum ResourceType {

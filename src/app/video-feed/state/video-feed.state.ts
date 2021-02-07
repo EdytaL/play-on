@@ -194,6 +194,8 @@ export class VideoFeedState implements NgxsOnInit {
                       id: item.id,
                       type: this.mapResourceType(item.type),
                       url: item.url,
+                      width: item.width,
+                      height: item.height,
                   };
               })
             : [];

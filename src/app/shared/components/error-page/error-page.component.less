@@ -1,0 +1,16 @@
+@import (reference) '~src/styles/theme';
+button {
+    width: 130px;
+    padding: 8px;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
+    border-radius: 4px;
+    border: none;
+    background-color: @btn-primary-color;
+    margin-top: 10px;
+    cursor: pointer;
+    color: @primary-light-font-color;
+    &:focus {
+        border: none;
+        opacity: 0.75;
+    }
+}

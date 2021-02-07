@@ -1,0 +1,40 @@
+@import (reference) '../../../../styles/styles';
+
+.video-player-wrapper {
+    max-width: 80vw;
+    width: 50vw;
+    text-align: center;
+    margin: 0 auto;
+    @media (max-width: @screen-md) {
+        width: 80vw;
+    }
+}
+
+.player-list {
+    margin: 0;
+    padding: 0;
+}
+
+.player-list li {
+    list-style: none;
+    padding: 15px 35px;
+    display: block;
+    background: #cccc;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 1px;
+}
+
+li.selected {
+    background: #03a9f4 !important;
+}
+
+vg-controls {
+    display: flex;
+    justify-content: space-around;
+}
+vg-player {
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
+    border-radius: 4px;
+    border: none;
+}
