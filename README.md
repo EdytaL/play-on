@@ -1,5 +1,40 @@
 # PlayOn
 
+A small web-application which visualizes all videos provided using an open API.
+
+
+
+1 .Requirements (MVP)
+  * Provides a list of videos to watch (product type video)
+  * Sort videos by metadata (audience)
+  * Allows users to browse videos
+  * Allows users to search videos
+  * Allows users to select individual video
+  * Play selected video
+2. Not MVP functions (to be added in next iterations)
+  * Support multi languages 
+  * Allow user to create an account
+  * Allow user to add video to favorites
+  * Allow user to save video to watch later
+  * Allow user to specify browsing preferences
+  * Recommend videos base on user preferences
+  * Show recently seen videos
+  * Show recommendations based on browsing history
+  * Implement filtering based on metadata
+  * Allow users to leave comments
+  * Allow users to leave rating
+
+
+
+
+
+
+
+
+
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
 
 ## Development server
