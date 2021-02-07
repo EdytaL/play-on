@@ -64,4 +64,8 @@ export class VideoFeedComponent implements OnInit {
         this.store.dispatch(new SelectVideo(video));
         this.activeLayout = 'videoPlayer';
     }
+
+    backToListing(): void {
+        this.activeLayout = 'videoFeed';
+    }
 }

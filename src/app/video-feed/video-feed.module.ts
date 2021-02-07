@@ -7,6 +7,8 @@ import { VideoFeedState } from './state/video-feed.state';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
     declarations: [VideoFeedComponent],
@@ -24,6 +26,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
             },
         ]),
         NzPaginationModule,
+        NzBreadCrumbModule,
+        NzIconModule,
     ],
 })
 export class VideoFeedModule {}

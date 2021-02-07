@@ -9,8 +9,20 @@
     </ng-container>
 </div>
 <ng-template #videoPlayer>
-    <div class="content-container" *ngIf="selectedVideo$ | async as video">
+    <div
+        class="content-container player-container"
+        *ngIf="selectedVideo$ | async as video"
+    >
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                <a (click)="backToListing()">
+                    <i nz-icon nzType="arrow-left" nzTheme="outline"></i> Back
+                    to the listing
+                </a>
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
         <app-video-player [video]="video"></app-video-player>
+        <app-video-details [video]="video"></app-video-details>
     </div>
 </ng-template>
 <ng-template #videoFeed>
