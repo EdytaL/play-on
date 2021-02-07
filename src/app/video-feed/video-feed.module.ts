@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzOutletModule } from 'ng-zorro-antd/core/outlet';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 @NgModule({
     declarations: [VideoFeedComponent],
@@ -28,6 +30,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         NzPaginationModule,
         NzBreadCrumbModule,
         NzIconModule,
+        NzOutletModule,
+        NzGridModule,
     ],
 })
 export class VideoFeedModule {}

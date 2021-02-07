@@ -1,3 +1,4 @@
+@import (reference) '../../../../styles/styles';
 .content-container {
     padding-top: 10px;
     width: 90%;
@@ -6,11 +7,41 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
+.skeleton-container {
+    padding-top: 100px;
+}
+
+.empty-container,
+.error-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 
 .player-container {
     padding-top: 125px;
-    app-video-details {
-        margin-bottom: 50px;
+    flex-direction: column;
+    :host ::ng-deep {
+        app-video-details {
+            margin-bottom: 50px;
+            .video-details-content {
+                width: 50vw;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    nz-breadcrumb {
+        width: 100%;
+        padding-bottom: 10px;
+    }
+
+    @media (max-width: @screen-md) {
+        nz-breadcrumb,
+        app-video-details {
+            width: 80vw;
+        }
     }
 }
 

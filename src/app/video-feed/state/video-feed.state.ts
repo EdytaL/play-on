@@ -98,8 +98,8 @@ export class VideoFeedState implements NgxsOnInit {
         { patchState, getState }: StateContext<VideoFeedStateModel>,
         action: FetchVideoFeedListSuccess
     ) {
-        let items = action.payload.items
-            .filter((item) => item?.resources?.length)
+        let items = action.payload?.items
+            ?.filter((item) => item?.resources?.length)
             .map((item) => {
                 return this.mapToVideoModel(item);
             })
