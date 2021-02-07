@@ -3,4 +3,4 @@ export const environment = {
 
     contentListUrl: 'https://rbcp.rbmbtnx.net/api/v2/content/communication',
     placeholderThumbnailImage: '/assets/placeholder.jpg',
-}
+};

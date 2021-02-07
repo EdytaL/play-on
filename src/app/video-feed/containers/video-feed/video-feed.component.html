@@ -15,6 +15,13 @@
 </ng-template>
 <ng-template #videoFeed>
     <ng-container *ngIf="(items$ | async)?.length">
+        <div class="search-box-container">
+            <app-search-bar
+                [placeholder]="'What are you looking for today?'"
+                [size]="'default'"
+                [form]="searchForm"
+            ></app-search-bar>
+        </div>
         <div class="content-container">
             <ng-container *ngFor="let item of items$ | async as items">
                 <app-video-tile

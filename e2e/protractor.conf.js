@@ -5,7 +5,7 @@
 const {
     SpecReporter,
     StacktraceOption,
-} = require('jasmine-spec-reporter/built/main')
+} = require('jasmine-spec-reporter/built/main');
 
 /**
  * @type { import("protractor").Config }
@@ -28,13 +28,13 @@ exports.config = {
     onPrepare() {
         require('ts-node/dist/index').register({
             project: require('path').join(__dirname, './tsconfig.json'),
-        })
+        });
         jasmine.getEnv().addReporter(
             new SpecReporter({
                 spec: {
                     displayStacktrace: StacktraceOption.PRETTY,
                 },
             })
-        )
+        );
     },
-}
+};

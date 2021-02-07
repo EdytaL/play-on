@@ -8,7 +8,7 @@ export const environment = {
     contentListUrl: 'https://rbcp.rbmbtnx.net/api/v2/content/communication',
 
     placeholderThumbnailImage: '/assets/placeholder.jpg',
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { EnvironmentService } from '../../core/services/environment.service'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { VideoListingResponse } from '../../shared/models/listing-response.model'
-import { Observable } from 'rxjs'
+import { Injectable } from '@angular/core';
+import { EnvironmentService } from '../../core/services/environment.service';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { VideoListingResponse } from '../../shared/models/listing-response.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -15,17 +15,27 @@ export class VideoFeedService {
 
     getVideoList(
         offset: number,
-        limit: number
+        limit: number,
+        searchPhrase: string
     ): Observable<VideoListingResponse> {
-        const url =
-            this.environmentService.contentListUrl +
-            '?f[mediaType]=Video&limit=' +
-            limit +
-            '&offset=' +
-            offset
+        let url = this.environmentService.contentListUrl;
+
+        let params = new HttpParams({
+            fromObject: {
+                'f[mediaType]': 'Video',
+                limit: limit.toString(),
+                offset: offset.toString(),
+            },
+        });
+        if (searchPhrase != null) {
+            params = params.set('q', searchPhrase);
+        }
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
-        })
-        return this.http.get<VideoListingResponse>(url, { headers: headers })
+        });
+        return this.http.get<VideoListingResponse>(url, {
+            headers: headers,
+            params: params,
+        });
     }
 }

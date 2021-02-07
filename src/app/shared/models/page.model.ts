@@ -1,4 +1,4 @@
 export interface IPageable {
-    limit?: number
-    page?: number
+    limit?: number;
+    page?: number;
 }

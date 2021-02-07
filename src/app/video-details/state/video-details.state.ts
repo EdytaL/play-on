@@ -1,8 +1,8 @@
-import { State, Action, Selector, StateContext } from '@ngxs/store'
-import { VideoDetailsAction } from '../actions/video-details.actions'
+import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { VideoDetailsAction } from '../actions/video-details.actions';
 
 export interface VideoDetailsStateModel {
-    items: string[]
+    items: string[];
 }
 
 @State<VideoDetailsStateModel>({
@@ -14,7 +14,7 @@ export interface VideoDetailsStateModel {
 export class VideoDetailsState {
     @Selector()
     public static getState(state: VideoDetailsStateModel) {
-        return state
+        return state;
     }
 
     @Action(VideoDetailsAction)
@@ -22,8 +22,8 @@ export class VideoDetailsState {
         ctx: StateContext<VideoDetailsStateModel>,
         { payload }: VideoDetailsAction
     ) {
-        const stateModel = ctx.getState()
-        stateModel.items = [...stateModel.items, payload]
-        ctx.setState(stateModel)
+        const stateModel = ctx.getState();
+        stateModel.items = [...stateModel.items, payload];
+        ctx.setState(stateModel);
     }
 }
