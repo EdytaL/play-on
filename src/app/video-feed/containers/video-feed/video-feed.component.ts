@@ -10,7 +10,7 @@ import { VideoDetails } from '../../../shared/models/video-details-model';
 import { IPageable } from '../../../shared/models/page.model';
 import { IMetadata } from '../../state/video-feed.state';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounce, debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-video-feed',
