@@ -2,9 +2,11 @@ import { State, Action, Selector, StateContext, NgxsOnInit } from '@ngxs/store'
 import { VideoFeedService } from '../services/video-feed.service'
 import {
     ChangePage,
+    ClearSelectedVideo,
     FetchVideoFeedList,
     FetchVideoFeedListFailure,
     FetchVideoFeedListSuccess,
+    SelectVideo,
 } from '../actions/video-feed.actions'
 import { catchError, tap } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
@@ -21,6 +23,7 @@ export interface VideoFeedStateModel {
     fetchItemsError: undefined
     pagination: IPageable
     metadata: IMetadata
+    selectedVideo: VideoDetails
 }
 
 export interface IMetadata {
@@ -44,6 +47,7 @@ export enum DefaultSearchMetadata {
             page: DefaultSearchMetadata.page,
         },
         metadata: { count: 0 },
+        selectedVideo: undefined,
     },
 })
 @Injectable()
@@ -67,9 +71,11 @@ export class VideoFeedState implements NgxsOnInit {
             fetchItemsSuccess: false,
             fetchItemsError: undefined,
             items: undefined,
-        });
-        const { pagination } = getState();
-        const offset = pagination?.page ? (pagination.page - 1) * DefaultSearchMetadata.limit : 0;
+        })
+        const { pagination } = getState()
+        const offset = pagination?.page
+            ? (pagination.page - 1) * DefaultSearchMetadata.limit
+            : 0
         return this.service
             .getVideoList(offset, DefaultSearchMetadata.limit)
             .pipe(
@@ -91,7 +97,7 @@ export class VideoFeedState implements NgxsOnInit {
     ) {
         let items = action.payload.items.map((item) => {
             return this.mapToVideoModel(item)
-        });
+        })
         let metadata = action.payload._meta
 
         patchState({
@@ -123,9 +129,30 @@ export class VideoFeedState implements NgxsOnInit {
     ) {
         patchState({
             pagination: { ...getState().pagination, page: action.payload },
-        });
-      return dispatch([new FetchVideoFeedList()])
+        })
+        return dispatch([new FetchVideoFeedList()])
+    }
 
+    @Action(SelectVideo)
+    selectVideo(
+        { patchState, getState }: StateContext<VideoFeedStateModel>,
+        action: SelectVideo
+    ) {
+        patchState({
+            ...getState(),
+            selectedVideo: action.payload,
+        })
+    }
+
+    @Action(ClearSelectedVideo)
+    clearSelectVideo({
+        patchState,
+        getState,
+    }: StateContext<VideoFeedStateModel>) {
+        patchState({
+            ...getState(),
+            selectedVideo: undefined,
+        })
     }
 
     mapToVideoModel(item: any): VideoDetails {

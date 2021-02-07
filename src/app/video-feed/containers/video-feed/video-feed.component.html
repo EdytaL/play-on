@@ -1,16 +1,26 @@
 <div class="container">
-    <ng-container *ngTemplateOutlet="videoFeed"></ng-container>
+    <ng-container [ngSwitch]="activeLayout">
+        <ng-container *ngSwitchCase="'videoFeed'">
+            <ng-container *ngTemplateOutlet="videoFeed"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'videoPlayer'">
+            <ng-container *ngTemplateOutlet="videoPlayer"></ng-container>
+        </ng-container>
+    </ng-container>
 </div>
 <ng-template #videoPlayer>
-    <div class="content-container">
-        <app-video-player [video]="videoToPlay"></app-video-player>
+    <div class="content-container" *ngIf="selectedVideo$ | async as video">
+        <app-video-player [video]="video"></app-video-player>
     </div>
 </ng-template>
 <ng-template #videoFeed>
     <ng-container *ngIf="(items$ | async)?.length">
         <div class="content-container">
             <ng-container *ngFor="let item of items$ | async as items">
-                <app-video-tile [item]="item"></app-video-tile>
+                <app-video-tile
+                    [item]="item"
+                    (videoSelected)="onVideoSelected($event)"
+                ></app-video-tile>
             </ng-container>
         </div>
         <div class="pagination-wrapper">
