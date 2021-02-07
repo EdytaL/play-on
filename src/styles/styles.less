@@ -1,12 +1,17 @@
 @import (reference) './theme';
 @import (reference) './reference.less';
 @import '../../node_modules/@videogular/ngx-videogular/fonts/videogular.css';
+@font-face {
+    font-family: Roboto;
+    src: url('~src/assets/Roboto/Roboto-Regular.ttf') format('opentype');
+}
 
 html,
 body,
 app-root,
 nz-layout.main {
     height: 100vh;
+    font-family: 'Roboto', 'arial', sans-serif;
 }
 
 .content-height-100 {
@@ -22,6 +27,31 @@ nz-layout.main {
     background-size: 100%;
     background-size: cover;
     height: 100vh;
+}
+.main-message {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 240px;
+    left: 100px;
+    h1,
+    h2 {
+        color: #fff;
+    }
+    button {
+        width: 130px;
+        padding: 8px;
+        box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
+        border-radius: 4px;
+        border: none;
+        background-color: @btn-primary-color;
+        margin-top: 10px;
+        cursor: pointer;
+        &:focus {
+            border: none;
+            opacity: 0.75;
+        }
+    }
 }
 .transparent {
     background-color: transparent;
@@ -72,26 +102,6 @@ app-video-details {
     }
 }
 
-.ant-btn-primary.primary-secondary {
-    background-color: @primary-purple-color;
-    border-color: @primary-purple-color;
-
-    &:hover {
-        background-color: @primary-purple-color;
-        border-color: @primary-purple-color;
-    }
-
-    &:focus {
-        background-color: @primary-purple-color;
-        border-color: @primary-purple-color;
-    }
-
-    &:active {
-        background-color: @primary-purple-color;
-        border-color: @primary-purple-color;
-    }
-}
-
 .btn-container {
     text-align: center;
 
@@ -114,15 +124,12 @@ i.info-circle {
     color: @primary-color;
     cursor: pointer;
 }
-.ant-select-dropdown-menu-item-group-title {
-    font-size: 10px !important;
-}
 
 .interactive-text {
     cursor: pointer;
     color: #8e8fa6;
 
     &:hover {
-        color: #38b6a0;
+        color: #e65c00;
     }
 }
