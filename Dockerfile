@@ -3,7 +3,7 @@
 #############
 
 # base image
-FROM node:12.2.0 as build
+FROM node:12.0.0 as build
 
 RUN npm install -g yarn
 
@@ -16,7 +16,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install and cache app dependencies
 COPY package*.json ./ yarn.lock ./
 RUN yarn install
-RUN yarn add @angular/cli@7.3.9
+RUN yarn add @angular/cli@11.1.2
 
 # add app
 COPY . /app
