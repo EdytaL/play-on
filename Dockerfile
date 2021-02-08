@@ -1,29 +1,41 @@
-FROM node:12.7-alpine as build-stage
+#############
+### build ###
+#############
+
+# base image
+FROM node:12.2.0 as build
 
 RUN npm install -g yarn
 
-ARG PORT
+# set working directory
+WORKDIR /app
 
-WORKDIR /tmp
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
+# install and cache app dependencies
 COPY package*.json ./ yarn.lock ./
-
 RUN yarn install
+RUN yarn add @angular/cli@7.3.9
 
-RUN echo $PORT
+# add app
+COPY . /app
 
-WORKDIR /usr/src/app
+# generate build
+RUN ng build --output-path=dist
 
-COPY . .
+############
+### prod ###
+############
 
-RUN npm run build
+# base image
+FROM nginx:1.16.0-alpine
 
-# Stage 2
-FROM nginx:alpine
+# copy artifact build from the 'build environment'
+COPY --from=build /app/dist /usr/share/nginx/html
 
-COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
+# expose port 80
+EXPOSE 80
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
-CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
-
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]
